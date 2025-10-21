@@ -1,0 +1,58 @@
+import { TabWidget, VerticalBox, Button } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    width: 600px;
+    height: 400px;
+    title: "Slint Multi-Tab Example";
+    background: #1a1a1a;
+
+    TabWidget {
+        
+
+        // 🏠 Home Tab
+        Tab {
+            title: "Home";
+            VerticalBox {
+                spacing: 12px;
+                padding: 16px;
+                Text {
+                    text: "🏠 Welcome to the Home Tab";
+                    color: white;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        // ⚙️ Settings Tab
+        Tab {
+            title: "Settings";
+            VerticalBox {
+                spacing: 12px;
+                padding: 16px;
+                Text {
+                    text: "⚙️ Settings go here";
+                    color: white;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        // 📘 About Tab
+        Tab {
+            title: "About";
+            VerticalBox {
+                spacing: 20px;
+                padding: 16px;
+                Text {
+                    text: "📘 About this app";
+                    color: white;
+                    font-size: 18px;
+                }
+                Text {
+                    text: "Built with Slint 💙";
+                    color: #aaa;
+                }
+            }
+        }
+    }
+}
