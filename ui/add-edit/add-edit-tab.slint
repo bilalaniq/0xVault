@@ -1,0 +1,10 @@
+import { VerticalBox, LineEdit, Button } from "std-widgets.slint";
+
+export component AddEditTab inherits VerticalBox {
+    spacing: 12px;
+    padding: 16px;
+    Text { text: "➕ Add / Edit Entry"; }
+    LineEdit { placeholder-text: "Website"; }
+    LineEdit { placeholder-text: "Username"; }
+    Button { text: "Save Entry"; }
+}

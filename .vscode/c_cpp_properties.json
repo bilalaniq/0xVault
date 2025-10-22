@@ -5,7 +5,11 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:/lib/libsodium/include",
-                "C:/lib/nlohmann/include"
+                "C:/lib/nlohmann/include",
+                "C:/lib/glfw-3.4.bin.WIN64/include",
+                "C:/lib/glew-2.2.0/include",
+                "${workspaceFolder}/src",      // your source folder
+                "${workspaceFolder}/ui"        // your Slint UI folder
             ],
             "defines": [
                 "_DEBUG",
@@ -15,7 +19,7 @@
             "windowsSdkVersion": "10.0.26100.0",
             "compilerPath": "cl.exe",
             "cStandard": "c17",
-            "cppStandard": "c++17",
+            "cppStandard": "c++20",
             "intelliSenseMode": "windows-msvc-x64"
         }
     ],

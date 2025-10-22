@@ -30,14 +30,40 @@ target_link_libraries(0xVault PRIVATE libsodium.lib)
 set(NLOHMANN_JSON_INCLUDE "C:/lib/nlohmann/include")
 target_include_directories(0xVault PRIVATE ${NLOHMANN_JSON_INCLUDE})
 
+
 # ===================================
-# 🪟 Optional: Copy required DLLs
+# 🎨 OpenGL, GLEW, and GLFW linking
 # ===================================
-if (WIN32)
+target_include_directories(0xVault PRIVATE
+    "C:/lib/glfw-3.4.bin.WIN64/include"
+    "C:/lib/glew-2.2.0/include"
+)
+
+# Link directly to the .lib files to avoid LNK1181
+target_link_libraries(0xVault PRIVATE
+    "C:/lib/glfw-3.4.bin.WIN64/lib-vc2022/glfw3.lib"
+    "C:/lib/glew-2.2.0/lib/Release/x64/glew32.lib"
+    opengl32
+)
+
+# ===================================
+# Copy required DLLs after build
+# ===================================
+if(WIN32)
   add_custom_command(TARGET 0xVault POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:0xVault> $<TARGET_FILE_DIR:0xVault>
-    COMMAND_EXPAND_LISTS)
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "C:/lib/glew-2.2.0/bin/Release/x64/glew32.dll"
+        $<TARGET_FILE_DIR:0xVault>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "C:/lib/glfw-3.4.bin.WIN64/lib-vc2022/glfw3.dll"
+        $<TARGET_FILE_DIR:0xVault>
+    COMMAND ${CMAKE_COMMAND} -E copy
+        $<TARGET_RUNTIME_DLLS:0xVault>
+        $<TARGET_FILE_DIR:0xVault>
+    COMMAND_EXPAND_LISTS
+  )
 endif()
+
 
 
 # ===================================
