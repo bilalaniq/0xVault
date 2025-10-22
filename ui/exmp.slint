@@ -1,0 +1,217 @@
+import { Palette } from "std-widgets.slint";
+
+struct Palette {
+    menuBar: brush,
+    mainContent: brush,
+    box: brush,
+    lightDisplay: brush,
+    pieChart: brush,
+    roundButton: brush,
+    weekdayBox: brush,
+    accent: brush,
+    accentHover: brush,
+    border: brush,
+    text: brush,
+    secondaryText: brush,
+    shadow: brush,
+}
+
+
+
+
+export global Skin {
+    // Force light mode by default
+    in property <bool> day: true;
+
+    out property <Palette> palette: root.day ? {
+        // 🌞 Light Mode
+        menuBar: #f3f4f6,
+        mainContent: #ffffff,
+        box: #f9fafb,
+        lightDisplay: #ffffff,
+        pieChart: #fefefe,
+        roundButton: #e5e7eb,
+        weekdayBox: #f1f5f9,
+        accent: #2563eb,
+        accentHover: #1d4ed8,
+        border: #d1d5db,
+        text: #111827,
+        secondaryText: #6b7280,
+        shadow: #0002,
+    } : {
+        // 🌙 Dark Mode
+        menuBar: #0f172a,
+        mainContent: #1e293b,
+        box: #273549,
+        lightDisplay: #1e293b,
+        pieChart: #334155,
+        roundButton: #3b4252,
+        weekdayBox: #2d3748,
+        accent: #3b82f6,
+        accentHover: #60a5fa,
+        border: #475569,
+        text: #f9fafb,
+        secondaryText: #9ca3af,
+        shadow: #0004,
+    };
+
+    // 🧠 Font scales — modern, readable sizing
+    out property <length> DefaultFont: 13px;
+    out property <length> TinyFont: 10px;
+    out property <length> SmallFont: 12px;
+    out property <length> MediumFont: 15px;
+    out property <length> LargeFont: 22px;
+    out property <length> HugeFont: 30px;
+    out property <length> TitleFont: 18px;
+}
+
+export component Clock inherits VerticalLayout {
+    in property <string> time <=> time-label.text;
+    Text {
+        text: "Current time";
+        font-size: Skin.TitleFont;
+        font-weight: 700;
+    }
+
+    time-label := Text {
+        text: "10:02:45";
+        font-size: Skin.HugeFont;
+        font-weight: 700;
+        color: #6776FF;
+    }
+}
+
+component MenuItem inherits Rectangle {
+    in property <image> icon <=> i.source;
+    in property <string> name <=> t.text;
+    in-out property <bool> active;
+    ma := TouchArea { }
+
+    out property <bool> hover: ma.has-hover;
+    background: root.active
+        ? rgba(100%, 100%, 100%, 0.14)
+        : root.hover ? rgba(100%, 100%, 100%, 0.09)
+        : transparent;
+
+    HorizontalLayout {
+        alignment: start;
+        spacing: 6px;
+        padding: 8px;
+        padding-left: 30px;
+        padding-right: 30px;
+
+        i := Image {
+            width: 14px;
+            height: self.source.height * 1px;
+        }
+
+        t := Text {
+            color: white;
+            font-size: Skin.SmallFont;
+        }
+    }
+}
+export component MenuBar inherits Rectangle {
+    min-width: 170px;
+    max-width: 240px;
+    background: Skin.palette.menuBar;
+
+    VerticalLayout {
+        padding-left: 0px;
+        padding-top: 25px;
+        padding-right: 0px;
+        padding-bottom: 20px;
+        spacing: 8px;
+
+        Text {
+            text: "0xVault";
+            font-size: 35pt;
+            font-family: "Roboto";
+            color: Skin.palette.accent;
+            font-weight: 700;
+            horizontal-alignment: center;
+        }
+
+        VerticalLayout {
+            padding-left: 30px;
+            padding-top: 10px;
+            padding-right: 30px;
+            padding-bottom: 50px;
+            spacing: 30px;
+
+            Rectangle { height: 10px; }
+
+            MenuItem {
+                background: self.hover ? Skin.palette.accentHover : transparent;
+                border-radius: 6px;
+                Text {
+                    text: "Vault";
+                    font-size: 24px;
+                    font-weight: 700;
+                    color: Skin.palette.text;
+                }
+            }
+
+            Rectangle { height: 10px; }
+
+            MenuItem {
+                background: self.hover ? Skin.palette.accentHover : transparent;
+                border-radius: 6px;
+                Text {
+                    text: "add-edit";
+                    font-size: 24px;
+                    font-weight: 700;
+                    color: Skin.palette.text;
+                }
+            }
+
+            Rectangle { height: 10px; }
+
+            MenuItem {
+                background: self.hover ? Skin.palette.accentHover : transparent;
+                border-radius: 6px;
+                Text {
+                    text: "setting";
+                    font-size: 24px;
+                    font-weight: 700;
+                    color: Skin.palette.text;
+                }
+            }
+
+            Rectangle { height: 10px; }
+
+            MenuItem {
+                background: self.hover ? Skin.palette.accentHover : transparent;
+                border-radius: 6px;
+                Text {
+                    text: "About";
+                    font-size: 24px;
+                    font-weight: 700;
+                    color: Skin.palette.text;
+                }
+            }
+
+            Rectangle {
+                Rectangle {
+                    height: 2px;
+                    width: parent.width;
+                    background: Skin.palette.border;
+                    border-radius: 1px;
+                    x: 0;
+                    y: parent.height - self.height;
+                }
+            }
+
+            MenuItem {
+                background: self.hover ? #b73225 : transparent;
+                border-radius: 6px;
+                Text {
+                    text: "Logout";
+                    font-size: 20px;
+                    font-weight: 700;
+                    color: Skin.palette.text;
+                }
+            }
+        }
+    }
+}

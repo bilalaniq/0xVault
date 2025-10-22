@@ -1,5 +1,32 @@
-export component AppWindow inherits Window {
-    width: 400px;
-    height: 400px;
-    title: "Slint + OpenGL Minimal Example";
+import { MenuBar, Clock, Skin } from "exmp.slint";
+
+component MainContent inherits Rectangle {
+    background: Skin.palette.mainContent;
+    VerticalLayout {
+        alignment: start;
+        spacing: 24px;
+
+        GridLayout {
+            spacing: 6px;
+            padding-left: 19px;
+            padding-top: 0px;
+            padding-right: 17px;
+            padding-bottom: 24px;
+        }
+
+        Clock { }
+    }
+}
+
+export component MainWindow inherits Window {
+    title: "0xVault";
+    background: Skin.palette.mainContent;
+
+    HorizontalLayout {
+        padding: 0;
+        spacing: 0;
+
+        MenuBar { }
+        MainContent { }
+    }
 }
